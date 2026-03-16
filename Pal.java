@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class UseCase4RoomSearch {
+public class pca {
 
     static class RoomInventory {
         private HashMap<String, Integer> inventory;
@@ -52,6 +52,20 @@ public class UseCase4RoomSearch {
             System.out.println("Amenities : " + amenities);
         }
     }
+    static class Reservation {
+        String guestName;
+        String roomType;
+
+        public Reservation(String guestName, String roomType) {
+            this.guestName = guestName;
+            this.roomType = roomType;
+        }
+
+        public void displayRequest() {
+            System.out.println("Guest Name : " + guestName);
+            System.out.println("Requested Room Type : " + roomType);
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to Book My Stay");
@@ -87,7 +101,19 @@ public class UseCase4RoomSearch {
                 room.displayDetails();
                 System.out.println("Available Count : " + inventory.getAvailability(room.type));
                 System.out.println();
-            }
+         Queue<Reservation> bookingQueue = new LinkedList<>();
+
+        bookingQueue.add(new Reservation("Amit", "Deluxe"));
+        bookingQueue.add(new Reservation("Priya", "Standard"));
+        bookingQueue.add(new Reservation("Rahul", "Suite"));
+
+        System.out.println("Booking Requests in Queue (First-Come-First-Served):");
+        for (Reservation request : bookingQueue) {
+            request.displayRequest();
+            System.out.println();
         }
+
+        System.out.println("Inventory after request intake (unchanged):");
+        inventory.displayInventory();
     }
 }
