@@ -1,6 +1,8 @@
-public class PalindromeCheckerApp {
+import java.util.HashMap;
+import java.util.Map;
 
-        // UC3 addition: centralized inventory using HashMap
+public class UseCase4RoomSearch {
+
     static class RoomInventory {
         private HashMap<String, Integer> inventory;
 
@@ -32,48 +34,60 @@ public class PalindromeCheckerApp {
         }
     }
 
+    // Minimal new class added for UC4
+    static class Room {
+        String type;
+        double price;
+        String amenities;
+
+        public Room(String type, double price, String amenities) {
+            this.type = type;
+            this.price = price;
+            this.amenities = amenities;
+        }
+
+        public void displayDetails() {
+            System.out.println("Room Type : " + type);
+            System.out.println("Price : " + price);
+            System.out.println("Amenities : " + amenities);
+        }
+    }
+
     public static void main(String[] args) {
-        System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 1.0");
-        System.out.println("System initialized successfully.");
-    
-     String word = "madam";
-        String reverse = "";
-
-        for (int i = word.length() - 1; i >= 0; i--) {
-            reverse = reverse + word.charAt(i);
-        }
-
-        if (word.equals(reverse)) {
-            System.out.println(word + " is a palindrome.");
-        } else {
-            System.out.println(word + " is not a palindrome.");
-        }
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a string for recursive palindrome check: ");
-        String input = sc.nextLine();
-
-        if (isPalindromeRecursive(input, 0, input.length() - 1)) {
-            System.out.println(input + " is a palindrome.");
-        } else {
-            System.out.println(input + " is not a palindrome.");
-        }
-
-        System.out.println("\nInitializing centralized room inventory...");
+        System.out.println("Welcome to Book My Stay");
+        System.out.println("Version : 4.0");
+        System.out.println("Initializing centralized room inventory...");
 
         RoomInventory inventory = new RoomInventory();
+
         inventory.addRoomType("Standard", 10);
         inventory.addRoomType("Deluxe", 5);
-        inventory.addRoomType("Suite", 2);
+        inventory.addRoomType("Suite", 0);
 
         inventory.displayInventory();
 
-        System.out.println("\nChecking availability for Deluxe: " +
-                inventory.getAvailability("Deluxe"));
+        System.out.println("\nChecking availability for Deluxe: "
+                + inventory.getAvailability("Deluxe"));
 
         System.out.println("\nUpdating Deluxe rooms to 4...");
         inventory.updateAvailability("Deluxe", 4);
 
         inventory.displayInventory();
+
+        // UC4 added with minimal structural change
+        Room standard = new Room("Standard", 2500.0, "AC, WiFi, TV");
+        Room deluxe = new Room("Deluxe", 4000.0, "AC, WiFi, TV, Mini Bar");
+        Room suite = new Room("Suite", 7000.0, "AC, WiFi, TV, Mini Bar, Jacuzzi");
+
+        Room[] rooms = {standard, deluxe, suite};
+
+        System.out.println("\nAvailable Rooms:");
+        for (Room room : rooms) {
+            if (inventory.getAvailability(room.type) > 0) {
+                room.displayDetails();
+                System.out.println("Available Count : " + inventory.getAvailability(room.type));
+                System.out.println();
+            }
+        }
     }
 }
