@@ -69,6 +69,76 @@ public class pca {
             System.out.println("Requested Room Type : " + roomType);
         }
     }
+    public static boolean isPalindromeDeque(String str) {
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char c : str.toCharArray()) {
+            deque.addLast(c);
+        }
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+        return true;
+    }
+        // UC8: Linked List Node
+    static class Node {
+        char data;
+        Node next;
+
+        public Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // UC8: Linked List based palindrome checker
+    public static boolean isPalindromeLinkedList(String str) {
+        Node head = null;
+        Node tail = null;
+
+        for (char c : str.toCharArray()) {
+            Node newNode = new Node(c);
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+
+        // Find middle using fast and slow pointer
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node prev = null;
+        Node curr = slow;
+        while (curr != null) {
+            Node nextNode = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+
+        // Compare both halves
+        Node left = head;
+        Node right = prev;
+        while (right != null) {
+            if (left.data != right.data) {
+                return false;
+            }
+            left = left.next;
+            right = right.next;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to Book My Stay");
