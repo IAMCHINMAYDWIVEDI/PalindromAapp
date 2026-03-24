@@ -1,5 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
 
 public class pca {
 
@@ -115,5 +118,16 @@ public class pca {
 
         System.out.println("Inventory after request intake (unchanged):");
         inventory.displayInventory();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nEnter a string to check palindrome using Deque: ");
+        String input = sc.nextLine();
+
+        if (isPalindromeDeque(input)) {
+            System.out.println(input + " is a palindrome.");
+        } else {
+            System.out.println(input + " is not a palindrome.");
+        }
+
+        sc.close();
     }
 }
